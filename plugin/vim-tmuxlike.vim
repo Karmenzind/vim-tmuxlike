@@ -47,7 +47,7 @@ endfunction
 
 " /* tmux origin */
 " help
-call s:TmuxLikeMap('nnoremap', '?', ':help tmux-like<CR>')
+call s:TmuxLikeMap('nnoremap', '?', ':help tmuxlike<CR>')
 " toggle zoom
 call s:TmuxLikeMap('nnoremap', 'z', ':call <SID>ZoomToggle()<CR>')
 " h split
