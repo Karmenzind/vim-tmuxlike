@@ -21,6 +21,10 @@ If you are quite addicted to tmux, you might need this plugin to make your vim w
 
 INSTALLATION                *tmuxlike-Installation*
 
+use vim-plug:
+    Plug 'karmenzind/vim-tmuxlike'
+use Vundle:
+    Plugin 'karmenzind/vim-tmuxlike'
 
 INTRO                *tmuxlike-Intro*
 

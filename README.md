@@ -3,7 +3,7 @@ Add tmux operating habits to vim.
 
 If you are quite addicted to tmux, you might need this plugin to make your vim work a bit like tmux.
 
-**current status**: DEVELOPING
+**current status: DEVELOPING**
 
 ## TOC
 
@@ -19,6 +19,15 @@ If you are quite addicted to tmux, you might need this plugin to make your vim w
 <!-- vim-markdown-toc -->
 
 ## Installation
+
+- use vim-plug:
+    ```
+    Plug 'karmenzind/vim-tmuxlike'
+    ```
+- use Vundle:
+    ```
+    Plugin 'karmenzind/vim-tmuxlike'
+    ```
 
 ## Intro
 
