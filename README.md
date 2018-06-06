@@ -20,11 +20,11 @@ If you are quite addicted to tmux, you might need this plugin to make your vim w
 
 ## Installation
 
-- use vim-plug:
+- use [vim-plug](https://github.com/junegunn/vim-plug):
     ```
     Plug 'karmenzind/vim-tmuxlike'
     ```
-- use Vundle:
+- use [Vundle](https://github.com/VundleVim/Vundle.vim):
     ```
     Plugin 'karmenzind/vim-tmuxlike'
     ```
@@ -82,13 +82,11 @@ I recommend using a 'CTRL-' key combination which will be really convenient (e.g
 
 ```vim
 " use CTRL-A (default)
-let g:tmux_like_prefix = '<c-a>'
+nmap <c-a> <Plug>(tmuxlike-prefix)
+" use CTRL-\ 
+nmap <c-\> <Plug>(tmuxlike-prefix)
 " use double leader (it will be `\\` if you haven't change the mapleader)
-let g:tmux_like_prefix = '<leader><leader>' 
-" use COMMA
-let g:tmux_like_prefix = ','
-" use CTRL-W (not recommended)
-let g:tmux_like_prefix = '<c-w>'
+nmap <Leader><Leader> <Plug>(tmuxlike-prefix)
 ```
 
 ## Problem or advice

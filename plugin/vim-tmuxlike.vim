@@ -2,8 +2,6 @@
 " Version: 0.1
 " Author: github.com/Karmenzind
 
-let g:tmux_like_prefix = '<c-a>'
-
 " --------------------------------------------
 " funcs
 " --------------------------------------------
@@ -11,10 +9,6 @@ function! s:TabSplitAndCloseCurrentBuf()
   let l:curbuf = expand('%')
   quit
   exec 'tabe ' . l:curbuf
-endfunction
-
-function! s:RotateWindows()
-
 endfunction
 
 function! s:ZoomToggle()
@@ -38,7 +32,7 @@ function! s:TmuxLikeMap(mapfunc, key, value)
     let l:_func=a:mapfunc
     let l:_key=a:key
     let l:_value = a:value
-    execute l:_func . ' <silent> ' . g:tmux_like_prefix . l:_key . ' ' . l:_value
+    execute l:_func . ' <silent> <Plug>(tmuxlike-prefix)' . l:_key . ' ' . l:_value
 endfunction
 
 " --------------------------------------------
@@ -108,4 +102,14 @@ call s:TmuxLikeMap('nnoremap', 'L', '<c-w>5>')
 call s:TmuxLikeMap('nmap', 'q', '<Plug>(choosewin)')
 call s:TmuxLikeMap('nmap', 's', '<Plug>(choosewin)')
 call s:TmuxLikeMap('nmap', '=', '<Plug>(choosewin)')
+
+" --------------------------------------------
+" Initial
+" --------------------------------------------
+
+nnoremap <silent> <c-w>=  <c-w>=:let b:current_zoom_mode = '='<CR>
+
+if !hasmapto('<Plug>(tmuxlike-prefix)')
+  nmap <silent> <c-a> <Plug>(tmuxlike-prefix)
+endif
 
