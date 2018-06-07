@@ -15,12 +15,16 @@ function! s:ZoomToggle()
   if !exists('b:current_zoom_mode')
     let b:current_zoom_mode = '='
   endif
+
   if b:current_zoom_mode ==# '='
-    if exists('NERDTree')
+    " if has nerdtree
+    if exists('g:loaded_nerd_tree')
       execute 'NERDTreeClose'
     endif
+
     silent! execute 'resize | vertical resize'
     let b:current_zoom_mode = '+'
+
   elseif b:current_zoom_mode ==# '+'
     execute "normal! \<c-w>="
     let b:current_zoom_mode = '='
