@@ -40,7 +40,7 @@ I use `<c-a>`(CTRL-A) as the default prefix key. You need to change it if you ha
 
 **original**
 
-You should be familiar with these basic operation.
+You may be familiar with these basic operation.
 
 Every keymap should start with `<prefix>`.
 
