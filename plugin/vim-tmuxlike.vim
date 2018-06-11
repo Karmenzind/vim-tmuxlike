@@ -5,33 +5,49 @@
 " --------------------------------------------
 " funcs
 " --------------------------------------------
+
 function! s:TabSplitAndCloseCurrentBuf()
   let l:curbuf = expand('%')
   quit
   exec 'tabe ' . l:curbuf
 endfunction
 
-function! s:ZoomToggle()
-  if !exists('b:current_zoom_mode')
-    let b:current_zoom_mode = '='
+" /* zoom utils */
+function! s:ResetTabZoomStatus()
+  let t:tmuxlike_zoomed_win = v:null
+endfunction
+
+function! s:ZoomInCurrent()
+  if &filetype ==? 'nerdtree'
+    echom 'Ignored nerdtree filetype.' | return
   endif
+  if exists('g:loaded_nerd_tree')
+    execute 'NERDTreeClose'
+  endif
+  silent! execute 'resize | vertical resize'
+  let t:tmuxlike_zoomed_win = win_getid()
+endfunction
 
-  if b:current_zoom_mode ==# '='
-    " if has nerdtree
-    if exists('g:loaded_nerd_tree')
-      execute 'NERDTreeClose'
-    endif
+function! s:MakeWinEqual()
+  execute "normal! \<c-w>="
+  call s:ResetTabZoomStatus()
+endfunction
 
-    silent! execute 'resize | vertical resize'
-    let b:current_zoom_mode = '+'
-
-  elseif b:current_zoom_mode ==# '+'
-    execute "normal! \<c-w>="
-    let b:current_zoom_mode = '='
+function! s:ZoomToggle()
+  if tabpagewinnr(tabpagenr(), '$') == 1
+    call s:ResetTabZoomStatus() | return
+  endif
+  if !exists('t:tmuxlike_zoomed_win')
+    call s:ResetTabZoomStatus()
+  endif
+  if t:tmuxlike_zoomed_win ==# win_getid()
+    call s:MakeWinEqual()
+  else
+    call s:ZoomInCurrent()
   endif
 endfunction
 
-
+" /* keymap */
 function! s:TmuxLikeMap(mapfunc, key, value)
     let l:_func=a:mapfunc
     let l:_key=a:key
@@ -111,7 +127,7 @@ call s:TmuxLikeMap('nmap', '=', '<Plug>(choosewin)')
 " Initial
 " --------------------------------------------
 
-nnoremap <silent> <c-w>=  <c-w>=:let b:current_zoom_mode = '='<CR>
+nnoremap <silent> <c-w>= :call <SID>MakeWinEqual()<CR>
 
 if !hasmapto('<Plug>(tmuxlike-prefix)')
   nmap <silent> <c-a> <Plug>(tmuxlike-prefix)
