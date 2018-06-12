@@ -3,7 +3,9 @@ Add tmux operating habits to vim.
 
 If you are quite addicted to tmux, you might need this plugin to make your vim work a bit like tmux.
 
-**current status: DEVELOPING**
+**current status: STABLE**
+
+Many new features are being developed.
 
 ## TOC
 
