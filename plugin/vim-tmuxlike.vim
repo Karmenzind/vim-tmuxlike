@@ -1,6 +1,9 @@
 " Name: vim-tmuxlike
-" Version: 0.1
+" Version: 0.1000000001
 " Author: github.com/Karmenzind
+
+" TODO:
+"   make `resize` and `change tab` repeatable
 
 " --------------------------------------------
 " funcs
@@ -8,7 +11,7 @@
 
 function! s:TabSplitAndCloseCurrentBuf()
   let l:curbuf = expand('%')
-  quit
+  confirm quit
   exec 'tabe ' . l:curbuf
 endfunction
 
@@ -18,12 +21,13 @@ function! s:ResetTabZoomStatus()
 endfunction
 
 function! s:ZoomInCurrent()
-  if &filetype ==? 'nerdtree'
-    echom 'Ignored nerdtree filetype.' | return
+  let l:ignored_fts = ['nerdtree', 'qf', 'tagbar']
+  if index(l:ignored_fts, tolower(&ft)) >= 0
+    echom 'Ignored filetype: ' . &ft | return
   endif
-  if exists('g:loaded_nerd_tree')
-    execute 'NERDTreeClose'
-  endif
+  for _c in ['NERDTreeClose', 'TagbarClose', 'cclose']
+    silent! execute _c
+  endfor
   silent! execute 'resize | vertical resize'
   let t:tmuxlike_zoomed_win = win_getid()
 endfunction
@@ -49,10 +53,10 @@ endfunction
 
 " /* keymap */
 function! s:TmuxLikeMap(mapfunc, key, value)
-    let l:_func=a:mapfunc
-    let l:_key=a:key
-    let l:_value = a:value
-    execute l:_func . ' <silent> <Plug>(tmuxlike-prefix)' . l:_key . ' ' . l:_value
+    let l:_f = a:mapfunc
+    let l:_k = a:key
+    let l:_v = a:value
+    execute l:_f . ' <silent> <Plug>(tmuxlike-prefix)' . l:_k . ' ' . l:_v
 endfunction
 
 " --------------------------------------------
@@ -80,11 +84,11 @@ call s:TmuxLikeMap('nnoremap', '<c-l>', ':tabnext<CR>')
 call s:TmuxLikeMap('nnoremap', '<c-n>', ':tabnext<CR>')
 " confirm quit current buffer
 call s:TmuxLikeMap('nnoremap', 'x', ':conf q<CR>')
-" close current tab
+" close current tab   TODO: a proper confirm
 call s:TmuxLikeMap('nnoremap', '&', ':tabclose<CR>')
 " show history
 call s:TmuxLikeMap('nnoremap', '~', ':messages<CR>')
-" break pane
+" break pane  TODO: how to move the unsaved buffer?
 call s:TmuxLikeMap('nnoremap', '!', ':call <SID>TabSplitAndCloseCurrentBuf()<CR>')
 " detach
 call s:TmuxLikeMap('nnoremap', 'd', ':suspend<CR>')
