@@ -4,6 +4,14 @@
 
 " TODO:
 "   make `resize` and `change tab` repeatable
+"   more interative
+
+" --------------------------------------------
+" variables
+" --------------------------------------------
+
+let g:tmuxlike_key_vsplit = get(g:, 'tmuxlike_key_vsplit', '\|')
+let g:tmuxlike_key_hsplit = get(g:, 'tmuxlike_key_hsplit', '_')
 
 " --------------------------------------------
 " funcs
@@ -70,10 +78,12 @@ call s:TmuxLikeMap('nnoremap', '?', ':help tmuxlike<CR>')
 call s:TmuxLikeMap('nnoremap', 'z', ':call <SID>ZoomToggle()<CR>')
 " h split
 call s:TmuxLikeMap('nnoremap', '"', ':new<CR>')
-call s:TmuxLikeMap('nnoremap', '_', ':split<CR>')
+" call s:TmuxLikeMap('nnoremap', '_', ':split<CR>')
+call s:TmuxLikeMap('nnoremap', g:tmuxlike_key_hsplit, ':vsplit<CR>')
 " v split
 call s:TmuxLikeMap('nnoremap', '%', ':vnew<CR>')
-call s:TmuxLikeMap('nnoremap', '\|', ':vsplit<CR>')
+" call s:TmuxLikeMap('nnoremap', '\|', ':vsplit<CR>')
+call s:TmuxLikeMap('nnoremap', g:tmuxlike_key_vsplit, ':vsplit<CR>')
 " new tab
 call s:TmuxLikeMap('nnoremap', 'c', ':$tabnew<CR>')
 " change tab
