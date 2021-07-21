@@ -79,7 +79,7 @@ call s:TmuxLikeMap('nnoremap', 'z', ':call <SID>ZoomToggle()<CR>')
 " h split
 call s:TmuxLikeMap('nnoremap', '"', ':new<CR>')
 " call s:TmuxLikeMap('nnoremap', '_', ':split<CR>')
-call s:TmuxLikeMap('nnoremap', g:tmuxlike_key_hsplit, ':vsplit<CR>')
+call s:TmuxLikeMap('nnoremap', g:tmuxlike_key_hsplit, ':split<CR>')
 " v split
 call s:TmuxLikeMap('nnoremap', '%', ':vnew<CR>')
 " call s:TmuxLikeMap('nnoremap', '\|', ':vsplit<CR>')
