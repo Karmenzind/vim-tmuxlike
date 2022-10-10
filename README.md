@@ -4,10 +4,6 @@ Add tmux operating habits to vim.
 
 If you are quite addicted to tmux, you might need this plugin to make your vim work a bit like tmux.
 
-**current status: STABLE**
-
-Many new features are being developed.
-
 ## TOC
 
 <!-- vim-markdown-toc GFM -->
@@ -19,6 +15,7 @@ Many new features are being developed.
 * [Config](#config)
     * [Prefix key](#prefix-key-1)
     * [Operation key maps](#operation-key-maps)
+* [TODO](#todo)
 * [Problem or advice](#problem-or-advice)
 
 <!-- vim-markdown-toc -->
@@ -63,8 +60,8 @@ Every keymap should start with `<prefix>`.
 -   `c`   open a new tab with an empty window after the last tab
 -   `<c-h>` `<c-p>`  select previous tab
     `n` `<c-n>` `<c-l>`  select next tab
--   `x`   close current buffer
--   `&`   close current tab
+-   `x`   forcely close current buffer
+-   `&`   forcely close current tab
 -   `~`   show history messages
     ![](https://raw.githubusercontent.com/Karmenzind/i/master/vim-tmuxlike/hist_msg.gif)
 -   `!`   break current buffer (move current buffer to new tabpage)
@@ -104,6 +101,11 @@ let g:tmuxlike_key_vsplit = '\'  " default value: \| (slash is for escaping)
 let g:tmuxlike_key_hsplit = '-'  " default value: _
 ```
 
+
+## TODO
+
+- (WIP) list and search tab/win with fzf/floating
+- all keymaps configurable
 
 ## Problem or advice
 

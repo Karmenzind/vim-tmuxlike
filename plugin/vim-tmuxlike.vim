@@ -68,6 +68,51 @@ function! s:TmuxLikeMap(mapfunc, key, value)
 endfunction
 
 " --------------------------------------------
+" others
+" --------------------------------------------
+
+function! s:ShowMessages()
+  execute 'messages'
+  # TODO (k): <2022-10-10>
+endfunction
+
+" --------------------------------------------
+" buffers
+" --------------------------------------------
+
+function! s:ChooseBuffer()
+  # TODO (k): <2022-10-10>
+endfunction
+
+" --------------------------------------------
+" tabs
+" --------------------------------------------
+
+function! s:CloseCurrentTab()
+  if tabpagenr('$') == 1
+    let prompt = "Kill the last tab?"
+  else
+    let prompt = printf("Kill tab %d?", tabpagenr())
+  endif
+
+  let choice = confirm(prompt, "&Yes\n&No", 2, "Warning")
+  if choice == 1
+    if tabpagenr('$') == 1
+      exec 'qa!'
+    else
+      exec 'tabclose'
+    endif
+  endif
+endfunction
+
+function! s:CloseCurrentWin()
+   let choice = confirm(printf("Kill window %d?", winnr()), "&Yes\n&No", 2, "Warning")
+   if choice == 1
+     exec 'q'
+   endif
+endfunction
+
+" --------------------------------------------
 " maps
 " --------------------------------------------
 
@@ -93,11 +138,11 @@ call s:TmuxLikeMap('nnoremap', '<n>', ':tabnext<CR>')
 call s:TmuxLikeMap('nnoremap', '<c-l>', ':tabnext<CR>')
 call s:TmuxLikeMap('nnoremap', '<c-n>', ':tabnext<CR>')
 " confirm quit current buffer
-call s:TmuxLikeMap('nnoremap', 'x', ':conf q<CR>')
-" close current tab   TODO: a proper confirm
-call s:TmuxLikeMap('nnoremap', '&', ':tabclose<CR>')
+call s:TmuxLikeMap('nnoremap', 'x', ':call <SID>CloseCurrentWin()<CR>')
+" confirm close current tab
+call s:TmuxLikeMap('nnoremap', '&', ':call <SID>CloseCurrentTab()<CR>')
 " show history
-call s:TmuxLikeMap('nnoremap', '~', ':messages<CR>')
+call s:TmuxLikeMap('nnoremap', '~', ':call <SID>ShowMessages()<CR>')
 " break pane  TODO: how to move the unsaved buffer?
 call s:TmuxLikeMap('nnoremap', '!', ':call <SID>TabSplitAndCloseCurrentBuf()<CR>')
 " detach
@@ -106,6 +151,9 @@ call s:TmuxLikeMap('nnoremap', 'd', ':suspend<CR>')
 call s:TmuxLikeMap('nnoremap', 'r', ':redraw<CR>')
 " time
 call s:TmuxLikeMap('nnoremap', 't', ':echom strftime("%c")<CR>')
+" buffers
+" call s:TmuxLikeMap('nnoremap', 'w', ':call <SID>ShowBuffers()<CR>')
+
 " TODO:
 " toggle layout
 " call s:TmuxLikeMap('nnoremap', '<space>', '<c-w>r')
