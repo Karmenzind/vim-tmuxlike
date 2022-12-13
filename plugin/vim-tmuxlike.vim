@@ -6,6 +6,11 @@
 "   make `resize` and `change tab` repeatable
 "   more interative
 
+if exists("g:loaded_vim_tmuxlike")
+    finish
+endif
+let g:loaded_vim_tmuxlike = 1
+
 " --------------------------------------------
 " variables
 " --------------------------------------------
@@ -17,47 +22,6 @@ let g:tmuxlike_key_hsplit = get(g:, 'tmuxlike_key_hsplit', '_')
 " funcs
 " --------------------------------------------
 
-function! s:TabSplitAndCloseCurrentBuf()
-  let l:curbuf = expand('%')
-  confirm quit
-  exec 'tabe ' . l:curbuf
-endfunction
-
-" /* zoom utils */
-function! s:ResetTabZoomStatus()
-  let t:tmuxlike_zoomed_win = v:null
-endfunction
-
-function! s:ZoomInCurrent()
-  let l:ignored_fts = ['nerdtree', 'qf', 'tagbar']
-  if index(l:ignored_fts, tolower(&ft)) >= 0
-    echom 'Ignored filetype: ' . &ft | return
-  endif
-  for _c in ['NERDTreeClose', 'TagbarClose', 'cclose']
-    silent! execute _c
-  endfor
-  silent! execute 'resize | vertical resize'
-  let t:tmuxlike_zoomed_win = win_getid()
-endfunction
-
-function! s:MakeWinEqual()
-  execute "normal! \<c-w>="
-  call s:ResetTabZoomStatus()
-endfunction
-
-function! s:ZoomToggle()
-  if tabpagewinnr(tabpagenr(), '$') == 1
-    call s:ResetTabZoomStatus() | return
-  endif
-  if !exists('t:tmuxlike_zoomed_win')
-    call s:ResetTabZoomStatus()
-  endif
-  if t:tmuxlike_zoomed_win ==# win_getid()
-    call s:MakeWinEqual()
-  else
-    call s:ZoomInCurrent()
-  endif
-endfunction
 
 " /* keymap */
 function! s:TmuxLikeMap(mapfunc, key, value)
@@ -68,51 +32,6 @@ function! s:TmuxLikeMap(mapfunc, key, value)
 endfunction
 
 " --------------------------------------------
-" others
-" --------------------------------------------
-
-function! s:ShowMessages()
-  execute 'messages'
-  # TODO (k): <2022-10-10>
-endfunction
-
-" --------------------------------------------
-" buffers
-" --------------------------------------------
-
-function! s:ChooseBuffer()
-  # TODO (k): <2022-10-10>
-endfunction
-
-" --------------------------------------------
-" tabs
-" --------------------------------------------
-
-function! s:CloseCurrentTab()
-  if tabpagenr('$') == 1
-    let prompt = "Kill the last tab?"
-  else
-    let prompt = printf("Kill tab %d?", tabpagenr())
-  endif
-
-  let choice = confirm(prompt, "&Yes\n&No", 2, "Warning")
-  if choice == 1
-    if tabpagenr('$') == 1
-      exec 'qa!'
-    else
-      exec 'tabclose'
-    endif
-  endif
-endfunction
-
-function! s:CloseCurrentWin()
-   let choice = confirm(printf("Kill window %d?", winnr()), "&Yes\n&No", 2, "Warning")
-   if choice == 1
-     exec 'q'
-   endif
-endfunction
-
-" --------------------------------------------
 " maps
 " --------------------------------------------
 
@@ -120,7 +39,7 @@ endfunction
 " help
 call s:TmuxLikeMap('nnoremap', '?', ':help tmuxlike<CR>')
 " toggle zoom
-call s:TmuxLikeMap('nnoremap', 'z', ':call <SID>ZoomToggle()<CR>')
+call s:TmuxLikeMap('nnoremap', 'z', ':call tmuxlike#ZoomToggle()<CR>')
 " h split
 call s:TmuxLikeMap('nnoremap', '"', ':new<CR>')
 " call s:TmuxLikeMap('nnoremap', '_', ':split<CR>')
@@ -138,13 +57,13 @@ call s:TmuxLikeMap('nnoremap', '<n>', ':tabnext<CR>')
 call s:TmuxLikeMap('nnoremap', '<c-l>', ':tabnext<CR>')
 call s:TmuxLikeMap('nnoremap', '<c-n>', ':tabnext<CR>')
 " confirm quit current buffer
-call s:TmuxLikeMap('nnoremap', 'x', ':call <SID>CloseCurrentWin()<CR>')
+call s:TmuxLikeMap('nnoremap', 'x', ':call tmuxlike#CloseCurrentWin()<CR>')
 " confirm close current tab
-call s:TmuxLikeMap('nnoremap', '&', ':call <SID>CloseCurrentTab()<CR>')
+call s:TmuxLikeMap('nnoremap', '&', ':call tmuxlike#CloseCurrentTab()<CR>')
 " show history
-call s:TmuxLikeMap('nnoremap', '~', ':call <SID>ShowMessages()<CR>')
+call s:TmuxLikeMap('nnoremap', '~', ':call tmuxlike#ShowMessages()<CR>')
 " break pane  TODO: how to move the unsaved buffer?
-call s:TmuxLikeMap('nnoremap', '!', ':call <SID>TabSplitAndCloseCurrentBuf()<CR>')
+call s:TmuxLikeMap('nnoremap', '!', ':call tmuxlike#TabSplitAndCloseCurrentBuf()<CR>')
 " detach
 call s:TmuxLikeMap('nnoremap', 'd', ':suspend<CR>')
 " refresh
@@ -189,7 +108,7 @@ call s:TmuxLikeMap('nmap', '=', '<Plug>(choosewin)')
 " Initial
 " --------------------------------------------
 
-nnoremap <silent> <c-w>= :call <SID>MakeWinEqual()<CR>
+nnoremap <silent> <c-w>= :call tmuxlike#MakeWinEqual()<CR>
 
 if !hasmapto('<Plug>(tmuxlike-prefix)')
   nmap <silent> <c-a> <Plug>(tmuxlike-prefix)

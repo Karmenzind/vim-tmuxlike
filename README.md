@@ -8,28 +8,17 @@ If you are quite addicted to tmux, you might need this plugin to make your vim w
 
 <!-- vim-markdown-toc GFM -->
 
-* [Installation](#installation)
 * [Intro](#intro)
     * [Prefix key](#prefix-key)
     * [Features](#features)
-* [Config](#config)
+* [Installation](#installation)
+* [Configuration](#configuration)
     * [Prefix key](#prefix-key-1)
     * [Operation key maps](#operation-key-maps)
 * [TODO](#todo)
 * [Problem or advice](#problem-or-advice)
 
 <!-- vim-markdown-toc -->
-
-## Installation
-
-- use [vim-plug](https://github.com/junegunn/vim-plug):
-    ```
-    Plug 'karmenzind/vim-tmuxlike'
-    ```
-- use [Vundle](https://github.com/VundleVim/Vundle.vim):
-    ```
-    Plugin 'karmenzind/vim-tmuxlike'
-    ```
 
 ## Intro
 
@@ -77,7 +66,18 @@ These keymaps need [t9md/vim-choosewin](https://github.com/t9md/vim-choosewin) i
 -   `q` `s` `=`  enter choosewin mode
     ![choose_win](https://raw.githubusercontent.com/Karmenzind/i/master/vim-tmuxlike/choose_win.gif)
 
-## Config
+## Installation
+
+- use [vim-plug](https://github.com/junegunn/vim-plug):
+    ```
+    Plug 'karmenzind/vim-tmuxlike'
+    ```
+- use [Vundle](https://github.com/VundleVim/Vundle.vim):
+    ```
+    Plugin 'karmenzind/vim-tmuxlike'
+    ```
+
+## Configuration
 
 ### Prefix key
 

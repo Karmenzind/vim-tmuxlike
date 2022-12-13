@@ -1,13 +1,15 @@
 *vim-tmuxlike.txt*    Add tmux operating habits to vim.
-*tmuxlike*
-*vim-tmuxlike*
 
 |tmuxlike-intro|    vim-tmuxlike
-|tmuxlike-Installation|    Installation
+|tmuxlike-TOC|    TOC
 |tmuxlike-Intro|    Intro
 |tmuxlike-Prefix-key|    Prefix key
 |tmuxlike-Features|    Features
-|tmuxlike-Config|    Config
+|tmuxlike-Installation|    Installation
+|tmuxlike-Configuration|    Configuration
+|tmuxlike-Prefix-key|    Prefix key
+|tmuxlike-Operation-key-maps|    Operation key maps
+|tmuxlike-TODO|    TODO
 |tmuxlike-Problem-or-advice|    Problem or advice
 
 VIM-TMUXLIKE                *tmuxlike-intro*
@@ -16,22 +18,26 @@ Add tmux operating habits to vim.
 
 If you are quite addicted to tmux, you might need this plugin to make your vim work a bit like tmux.
 
-**current status: DEVELOPING**
 
+TOC                *tmuxlike-TOC*
 
-INSTALLATION                *tmuxlike-Installation*
+[Intro](#intro)
 
-use [vim-plug](https://github.com/junegunn/vim-plug):
+[Prefix key](#prefix-key)
 
->
-    Plug 'karmenzind/vim-tmuxlike'
-<
+[Features](#features)
 
-use [Vundle](https://github.com/VundleVim/Vundle.vim):
+[Installation](#installation)
 
->
-    Plugin 'karmenzind/vim-tmuxlike'
-<
+[Configuration](#configuration)
+
+[Prefix key](#prefix-key-1)
+
+[Operation key maps](#operation-key-maps)
+
+[TODO](#todo)
+
+[Problem or advice](#problem-or-advice)
 
 
 INTRO                *tmuxlike-Intro*
@@ -39,15 +45,15 @@ INTRO                *tmuxlike-Intro*
 
 PREFIX KEY                *tmuxlike-Prefix-key*
 
-Just like `<prefix>`(usually CTRL-B) in tmux, there's a prefix key in vim-tmuxlike.<br>
-I use `<c-a>`(CTRL-A) as the default prefix key. You need to change it if you have the same keymap in tmux.
+Just like `<prefix>`(usually `CTRL-B`) in tmux, there's a prefix key in vim-tmuxlike.<br>
+I use `<c-a>`(`CTRL-A`) as the default prefix key. You need to change it if you have the same keymap in tmux.
 
 
 FEATURES                *tmuxlike-Features*
 
 **original**
 
-You should be familiar with these basic operation.
+Tmux users may be familiar with these basic operation.
 
 Every keymap should start with `<prefix>`.
 
@@ -61,7 +67,7 @@ Every keymap should start with `<prefix>`.
 
 ![](https://raw.githubusercontent.com/Karmenzind/i/master/vim-tmuxlike/vsplit_new.gif)
 
-`|`   split current buffer oh the right side
+`|`   split current buffer oh the right side (custom: `g:tmuxlike_key_vsplit`)
 
 ![](https://raw.githubusercontent.com/Karmenzind/i/master/vim-tmuxlike/vsplit_cur.gif)
 
@@ -69,7 +75,7 @@ Every keymap should start with `<prefix>`.
 
 ![](https://raw.githubusercontent.com/Karmenzind/i/master/vim-tmuxlike/split_new.gif)
 
-`_`   split current buffer downside
+`_`   split current buffer downside (custom: `g:tmuxlike_key_hsplit`)
 
 ![](https://raw.githubusercontent.com/Karmenzind/i/master/vim-tmuxlike/split_cur.gif)
 
@@ -79,9 +85,9 @@ Every keymap should start with `<prefix>`.
 
 `n` `<c-n>` `<c-l>`  select next tab
 
-`x`   close current buffer
+`x`   forcely close current buffer
 
-`&`   close current tab
+`&`   forcely close current tab
 
 `~`   show history messages
 
@@ -110,7 +116,25 @@ These keymaps need [t9md/vim-choosewin](https://github.com/t9md/vim-choosewin) i
 ![choose_win](https://raw.githubusercontent.com/Karmenzind/i/master/vim-tmuxlike/choose_win.gif)
 
 
-CONFIG                *tmuxlike-Config*
+INSTALLATION                *tmuxlike-Installation*
+
+use [vim-plug](https://github.com/junegunn/vim-plug):
+
+>
+    Plug 'karmenzind/vim-tmuxlike'
+<
+
+use [Vundle](https://github.com/VundleVim/Vundle.vim):
+
+>
+    Plugin 'karmenzind/vim-tmuxlike'
+<
+
+
+CONFIGURATION                *tmuxlike-Configuration*
+
+
+PREFIX KEY                *tmuxlike-Prefix-key*
 
 Feel free to change the prefix key.
 I recommend using a 'CTRL-' key combination which will be really convenient (e.g. with default prefix `<c-a>`, you just need to hold CTRL and type 'ah' for `<prefix><c-h>`).
@@ -118,11 +142,27 @@ I recommend using a 'CTRL-' key combination which will be really convenient (e.g
 >
     " use CTRL-A (default)
     nmap <c-a> <Plug>(tmuxlike-prefix)
-    " use CTRL-\ 
+    " use CTRL-\
     nmap <c-\> <Plug>(tmuxlike-prefix)
     " use double leader (it will be `\\` if you haven't change the mapleader)
     nmap <Leader><Leader> <Plug>(tmuxlike-prefix)
 <
+
+
+OPERATION KEY MAPS                *tmuxlike-Operation-key-maps*
+
+>
+    " use <prefix> + <key> to split current buffer
+    let g:tmuxlike_key_vsplit = '\'  " default value: \| (slash is for escaping)
+    let g:tmuxlike_key_hsplit = '-'  " default value: _
+<
+
+
+TODO                *tmuxlike-TODO*
+
+(WIP) list and search tab/win with fzf/floating
+
+all keymaps configurable
 
 
 PROBLEM OR ADVICE                *tmuxlike-Problem-or-advice*
