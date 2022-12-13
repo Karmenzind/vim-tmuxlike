@@ -1,4 +1,5 @@
 
+let s:messages_container = get(g:, 'tmuxlike_messages_container', 'scratch')
 
 
 function! s:TabSplitAndCloseCurrentBuf()
@@ -33,41 +34,57 @@ endfunction
 " others
 " --------------------------------------------
 
-function! tmuxlike#ShowMessages()
-  execute 'messages'
-  return
-
-  let m = execute("messages")
-  if len(m) == 0
+function! tmuxlike#ShowMessages() abort
+  let history = execute("messages")
+  if len(history) == 0
     echo "No history message."
-  else
-    execute "tabe"
-    call append(0, m)
-  endif
-  return
-  " TODO (k): <2022-10-10> 
-
-
-  if has("nvim")
-    execute 'messages'
     return
   endif
-  if has("popupwin")
-    let history = execute("messages")
 
-    call popup_create(history, #{
-      \ line: 1,
-      \ col: 10,
-      \ minwidth: 20,
-      \ time: 30000,
-      \ tabpage: -1,
-      \ zindex: 300,
-      \ drag: 1,
-      \ highlight: 'WarningMsg',
-      \ border: [],
-      \ close: 'click',
-      \ padding: [0,1,0,1],
-      \ })
+  if s:messages_container == "scratch"
+    execute "new [Messages]"
+    " let win = winnr()
+    let buf = bufnr()
+
+    call append(0, history)
+    execute '%s/\v[\x0]/\r/g'
+
+    call setbufvar(buf, "&buftype", "nofile")
+    call setbufvar(buf, "&bufhidden", "hide")
+    call setbufvar(buf, "&swapfile", "0")
+    call setbufvar(buf, "&wrap", "1")
+    call setbufvar(buf, "&ft", "messages")
+  elseif s:messages_container == "float"
+    if has("nvim")
+      execute 'messages'
+    endif
+    if has("popupwin")
+      let history = execute("messages")
+      let lines = split(history, '[\x0]', 0)
+
+      let msg_win = popup_create(lines, #{
+        \ title: "Messages",
+        \ line: 1,
+        \ col: 10,
+        \ minwidth: 20,
+        \ time: 30000,
+        \ tabpage: -1,
+        \ zindex: 300,
+        \ drag: 1,
+        \ dragall: 1,
+        \ highlight: 'WarningMsg',
+        \ border: [1,1,1,1],
+        \ padding: [0, 1, 0, 1],
+        \ scrollbar: 1,
+        \ pos: 'center',
+        \ cursorline: 1,
+        \ borderchars: ['-', '|', '-', '|', '┌', '┐', '┘', '└'],
+        \ close: 'button',
+        \ resize: 1,
+        \ })
+    endif
+  else
+    execute 'messages'
   endif
 endfunction
 

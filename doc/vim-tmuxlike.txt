@@ -3,14 +3,9 @@
 |tmuxlike-intro|    vim-tmuxlike
 |tmuxlike-TOC|    TOC
 |tmuxlike-Intro|    Intro
-|tmuxlike-Prefix-key|    Prefix key
-|tmuxlike-Features|    Features
 |tmuxlike-Installation|    Installation
 |tmuxlike-Configuration|    Configuration
-|tmuxlike-Prefix-key|    Prefix key
-|tmuxlike-Operation-key-maps|    Operation key maps
-|tmuxlike-TODO|    TODO
-|tmuxlike-Problem-or-advice|    Problem or advice
+|tmuxlike-Others|    Others
 
 VIM-TMUXLIKE                *tmuxlike-intro*
 
@@ -23,35 +18,21 @@ TOC                *tmuxlike-TOC*
 
 [Intro](#intro)
 
-[Prefix key](#prefix-key)
-
-[Features](#features)
-
 [Installation](#installation)
 
 [Configuration](#configuration)
 
-[Prefix key](#prefix-key-1)
-
-[Operation key maps](#operation-key-maps)
-
-[TODO](#todo)
-
-[Problem or advice](#problem-or-advice)
+[Others](#others)
 
 
 INTRO                *tmuxlike-Intro*
 
-
-PREFIX KEY                *tmuxlike-Prefix-key*
+**Prefix key**
 
 Just like `<prefix>`(usually `CTRL-B`) in tmux, there's a prefix key in vim-tmuxlike.<br>
 I use `<c-a>`(`CTRL-A`) as the default prefix key. You need to change it if you have the same keymap in tmux.
 
-
-FEATURES                *tmuxlike-Features*
-
-**original**
+**Features**
 
 Tmux users may be familiar with these basic operation.
 
@@ -133,8 +114,7 @@ use [Vundle](https://github.com/VundleVim/Vundle.vim):
 
 CONFIGURATION                *tmuxlike-Configuration*
 
-
-PREFIX KEY                *tmuxlike-Prefix-key*
+**prefix key**
 
 Feel free to change the prefix key.
 I recommend using a 'CTRL-' key combination which will be really convenient (e.g. with default prefix `<c-a>`, you just need to hold CTRL and type 'ah' for `<prefix><c-h>`).
@@ -148,8 +128,7 @@ I recommend using a 'CTRL-' key combination which will be really convenient (e.g
     nmap <Leader><Leader> <Plug>(tmuxlike-prefix)
 <
 
-
-OPERATION KEY MAPS                *tmuxlike-Operation-key-maps*
+**operation keymaps**
 
 >
     " use <prefix> + <key> to split current buffer
@@ -157,17 +136,23 @@ OPERATION KEY MAPS                *tmuxlike-Operation-key-maps*
     let g:tmuxlike_key_hsplit = '-'  " default value: _
 <
 
+**others**
 
-TODO                *tmuxlike-TODO*
+>
+    " View :messages in a scratch buffer or a floating window. Options: float, scratch(default)
+    let g:tmuxlike_messages_container = 'scratch'
+<
+
+
+OTHERS                *tmuxlike-Others*
+
+TODO:
 
 (WIP) list and search tab/win with fzf/floating
 
 all keymaps configurable
 
-
-PROBLEM OR ADVICE                *tmuxlike-Problem-or-advice*
-
-Please [create an issue](https://github.com/Karmenzind/vim-tmuxlike/issues/new) and I'll fix it ASAP.
+If you have any problem or advice, please [create an issue](https://github.com/Karmenzind/vim-tmuxlike/issues/new) and I'll fix it ASAP.
 
 
 

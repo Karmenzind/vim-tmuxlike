@@ -9,27 +9,20 @@ If you are quite addicted to tmux, you might need this plugin to make your vim w
 <!-- vim-markdown-toc GFM -->
 
 * [Intro](#intro)
-    * [Prefix key](#prefix-key)
-    * [Features](#features)
 * [Installation](#installation)
 * [Configuration](#configuration)
-    * [Prefix key](#prefix-key-1)
-    * [Operation key maps](#operation-key-maps)
-* [TODO](#todo)
-* [Problem or advice](#problem-or-advice)
+* [Others](#others)
 
 <!-- vim-markdown-toc -->
 
 ## Intro
 
-### Prefix key
+**Prefix key**
 
 Just like `<prefix>`(usually `CTRL-B`) in tmux, there's a prefix key in vim-tmuxlike.<br>
 I use `<c-a>`(`CTRL-A`) as the default prefix key. You need to change it if you have the same keymap in tmux.
 
-### Features
-
-**original**
+**Features**
 
 Tmux users may be familiar with these basic operation.
 
@@ -79,7 +72,7 @@ These keymaps need [t9md/vim-choosewin](https://github.com/t9md/vim-choosewin) i
 
 ## Configuration
 
-### Prefix key
+**prefix key**
 
 Feel free to change the prefix key.
 I recommend using a 'CTRL-' key combination which will be really convenient (e.g. with default prefix `<c-a>`, you just need to hold CTRL and type 'ah' for `<prefix><c-h>`).
@@ -93,7 +86,7 @@ nmap <c-\> <Plug>(tmuxlike-prefix)
 nmap <Leader><Leader> <Plug>(tmuxlike-prefix)
 ```
 
-### Operation key maps
+**operation keymaps**
 
 ```vim
 " use <prefix> + <key> to split current buffer
@@ -101,12 +94,18 @@ let g:tmuxlike_key_vsplit = '\'  " default value: \| (slash is for escaping)
 let g:tmuxlike_key_hsplit = '-'  " default value: _
 ```
 
+**others**
 
-## TODO
+```vim
+" View :messages in a scratch buffer or a floating window. Options: float, scratch(default)
+let g:tmuxlike_messages_container = 'scratch'
+```
+
+## Others
+
+TODO:
 
 - (WIP) list and search tab/win with fzf/floating
 - all keymaps configurable
 
-## Problem or advice
-
-Please [create an issue](https://github.com/Karmenzind/vim-tmuxlike/issues/new) and I'll fix it ASAP.
+If you have any problem or advice, please [create an issue](https://github.com/Karmenzind/vim-tmuxlike/issues/new) and I'll fix it ASAP.
