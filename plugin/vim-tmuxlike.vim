@@ -93,11 +93,19 @@ call s:TmuxLikeMap('nnoremap', '<Left>', '<c-w>h')
 call s:TmuxLikeMap('nnoremap', '<Down>', '<c-w>j')
 call s:TmuxLikeMap('nnoremap', '<Up>', '<c-w>k')
 call s:TmuxLikeMap('nnoremap', '<Right>', '<c-w>l')
+
 " resize
-call s:TmuxLikeMap('nnoremap', 'H', '<c-w>5<')
-call s:TmuxLikeMap('nnoremap', 'J', '<c-w>5+')
-call s:TmuxLikeMap('nnoremap', 'K', '<c-w>5-')
-call s:TmuxLikeMap('nnoremap', 'L', '<c-w>5>')
+if has('nvim')
+  call s:TmuxLikeMap('nnoremap', 'H', '<c-w>5<')
+  call s:TmuxLikeMap('nnoremap', 'J', '<c-w>5+')
+  call s:TmuxLikeMap('nnoremap', 'K', '<c-w>5-')
+  call s:TmuxLikeMap('nnoremap', 'L', '<c-w>5>')
+else
+  call s:TmuxLikeMap('nnoremap', 'H', '<cmd>call tmuxlike#EnterResizeMode("H")<CR>')
+  call s:TmuxLikeMap('nnoremap', 'J', '<cmd>call tmuxlike#EnterResizeMode("J")<CR>')
+  call s:TmuxLikeMap('nnoremap', 'K', '<cmd>call tmuxlike#EnterResizeMode("K")<CR>')
+  call s:TmuxLikeMap('nnoremap', 'L', '<cmd>call tmuxlike#EnterResizeMode("L")<CR>')
+endif
 
 " /* choose-win */
 call s:TmuxLikeMap('nmap', 'q', '<Plug>(choosewin)')

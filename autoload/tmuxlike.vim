@@ -31,6 +31,67 @@ function! tmuxlike#MakeWinEqual()
 endfunction
 
 " --------------------------------------------
+" resize mode
+" --------------------------------------------
+
+let s:resizing_win = v:null
+
+function! s:DoResize(key)
+  if a:key == 'L'
+    call execute('vertical' .. s:resizing_win .. "resize +3")
+  elseif a:key == 'H'
+    call execute('vertical' .. s:resizing_win.."resize -3")
+  elseif a:key == 'J'
+    call execute(s:resizing_win .. 'resize +3')
+  elseif a:key == 'K'
+    call execute(s:resizing_win .. 'resize -3')
+  endif
+endfunction
+
+function! tmuxlike#ResizeModeFilter(winid, key) abort
+  " echom "resizing win ".. s:resizing_win
+  if a:key == 'q' || a:key == "\<ESC>" || a:key == "\<CR>"
+    call popup_close(a:winid)
+  else
+    call s:DoResize(a:key)
+  endif
+  return 1
+endfunction
+
+let s:saved_map = v:null
+
+function! tmuxlike#AfterResizing(...)
+  if s:saved_map != v:null
+			call mapset('n', 0, s:saved_map)
+  endif
+endfunction
+
+function! tmuxlike#EnterResizeMode(key) abort
+  let s:saved_map = maparg('K', 'n', 0, 1)
+  silent nunmap K
+
+  let s:resizing_win = winnr()
+  let text = ["Resizing...", "Press H/J/K/L to resize, ESC/ENTER/q to quit"]
+
+  let popup_win = popup_create(text, #{
+        \ line: 3,
+        \ col: &columns - 1,
+        \ pos: 'topright',
+        \ zindex: 300,
+        \ close: 'none',
+        \ cursorline: v:true,
+        \ border:[1,1,1,1],
+        \ borderchars: ['─', '│', '─', '│', '╭', '╮', '╯', '╰'],
+        \ highlight: 'Normal',
+        \ borderhighlight: ['MoreMsg'],
+        \ filtermode: 'a',
+        \ filter: 'tmuxlike#ResizeModeFilter',
+        \ callback: 'tmuxlike#AfterResizing',
+        \})
+  call s:DoResize(a:key)
+endfunction
+
+" --------------------------------------------
 " others
 " --------------------------------------------
 

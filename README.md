@@ -28,6 +28,9 @@ Tmux users may be familiar with these basic operation.
 
 Every keymap should start with `<prefix>`.
 
+-   `h` `j` `k` `l` `Left` `Down` `Up` `Right`  change buffer
+-   `H` `J` `K` `L`  enter resize-mode and smoothly resize current window with direction key (vim only; nvim version still WIP)
+    ![](https://raw.githubusercontent.com/Karmenzind/i/master/vim-tmuxlike/resize_mode.gif)
 -   `?`   open vim-tmuxlike's helppage
 -   `z`   toggle buffer zoom mode
     ![](https://raw.githubusercontent.com/Karmenzind/i/master/vim-tmuxlike/toggle_zoom.gif)
@@ -52,8 +55,6 @@ Every keymap should start with `<prefix>`.
 -   `r`   redraw current buffer
 -   `]`   paste [from register *]
 -   `;`   choose last buffer
--   `h` `j` `k` `l` `Left` `Down` `Up` `Right`  change buffer
--   `H` `J` `K` `L`  resize current window
 
 These keymaps need [t9md/vim-choosewin](https://github.com/t9md/vim-choosewin) installed.
 -   `q` `s` `=`  enter choosewin mode
@@ -64,10 +65,6 @@ These keymaps need [t9md/vim-choosewin](https://github.com/t9md/vim-choosewin) i
 - use [vim-plug](https://github.com/junegunn/vim-plug):
     ```
     Plug 'karmenzind/vim-tmuxlike'
-    ```
-- use [Vundle](https://github.com/VundleVim/Vundle.vim):
-    ```
-    Plugin 'karmenzind/vim-tmuxlike'
     ```
 
 ## Configuration
