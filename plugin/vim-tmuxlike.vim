@@ -32,6 +32,51 @@ function! s:TmuxLikeMap(mapfunc, key, value)
 endfunction
 
 " --------------------------------------------
+" others
+" --------------------------------------------
+
+function! s:ShowMessages()
+  execute 'messages'
+  " TODO (k): <2022-10-10>
+endfunction
+
+" --------------------------------------------
+" buffers
+" --------------------------------------------
+
+function! s:ChooseBuffer()
+  " TODO (k): <2022-10-10>
+endfunction
+
+" --------------------------------------------
+" tabs
+" --------------------------------------------
+
+function! s:CloseCurrentTab()
+  if tabpagenr('$') == 1
+    let prompt = "Kill the last tab?"
+  else
+    let prompt = printf("Kill tab %d?", tabpagenr())
+  endif
+
+  let choice = confirm(prompt, "&Yes\n&No", 2, "Warning")
+  if choice == 1
+    if tabpagenr('$') == 1
+      exec 'qa!'
+    else
+      exec 'tabclose'
+    endif
+  endif
+endfunction
+
+function! s:CloseCurrentWin()
+   let choice = confirm(printf("Kill window %d?", winnr()), "&Yes\n&No", 2, "Warning")
+   if choice == 1
+     exec 'q'
+   endif
+endfunction
+
+" --------------------------------------------
 " maps
 " --------------------------------------------
 
