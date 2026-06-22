@@ -1,0 +1,17 @@
+Release v0.2.0: ✨ Native Vim and Neovim tmux-style workflows
+
+## ✨ New Features
+
+- 🔄 Interactive resize mode for Neovim
+- 🎯 Built-in window chooser (replaces vim-choosewin)
+- 📑 Tab selection and layout cycling
+- 🔀 Pane swapping capabilities
+- 🌙 Lua setup API for Neovim
+- 💬 Floating message history for Neovim
+
+## 🧪 Improvements
+
+- ✅ Comprehensive Vim and Neovim regression tests
+- 📚 Updated documentation and migration guide
+- 🔐 Configurable pane labels with reserved-key validation
+- 💾 Enhanced state management and preservation
