@@ -17,6 +17,10 @@ let g:loaded_vim_tmuxlike = 1
 
 let g:tmuxlike_key_vsplit = get(g:, 'tmuxlike_key_vsplit', '\|')
 let g:tmuxlike_key_hsplit = get(g:, 'tmuxlike_key_hsplit', '_')
+let g:tmuxlike_chooser_scope = get(g:, 'tmuxlike_chooser_scope', 'current')
+let g:tmuxlike_chooser_characters = get(g:, 'tmuxlike_chooser_characters', 'ABEFHIJKLMNOPRSTUVWXYZ')
+let g:tmuxlike_chooser_font = get(g:, 'tmuxlike_chooser_font', 'smblock')
+let g:tmuxlike_chooser_marker_width = 4
 
 " --------------------------------------------
 " funcs
@@ -98,7 +102,7 @@ call s:TmuxLikeMap('nnoremap', 'c', ':$tabnew<CR>')
 " change tab
 call s:TmuxLikeMap('nnoremap', '<c-h>', ':tabprevious<CR>')
 call s:TmuxLikeMap('nnoremap', '<c-p>', ':tabprevious<CR>')
-call s:TmuxLikeMap('nnoremap', '<n>', ':tabnext<CR>')
+"call s:TmuxLikeMap('nnoremap', 'n', ':tabnext<CR>')
 call s:TmuxLikeMap('nnoremap', '<c-l>', ':tabnext<CR>')
 call s:TmuxLikeMap('nnoremap', '<c-n>', ':tabnext<CR>')
 " confirm quit current buffer
@@ -118,11 +122,10 @@ call s:TmuxLikeMap('nnoremap', 't', ':echom strftime("%c")<CR>')
 " buffers
 " call s:TmuxLikeMap('nnoremap', 'w', ':call <SID>ShowBuffers()<CR>')
 
-" TODO:
-" toggle layout
-" call s:TmuxLikeMap('nnoremap', '<space>', '<c-w>r')
-" rotate window
-" call s:TmuxLikeMap('nnoremap', '<c-o>', '"+p')
+" layout and pane order
+call s:TmuxLikeMap('nnoremap', '<space>', '<cmd>call tmuxlike#CycleLayout()<CR>')
+call s:TmuxLikeMap('nnoremap', '{', '<cmd>call tmuxlike#SwapPane(-1)<CR>')
+call s:TmuxLikeMap('nnoremap', '}', '<cmd>call tmuxlike#SwapPane(1)<CR>')
 
 " /* unnecessary tmux origin */
 " paste (from system clipboard)
@@ -140,22 +143,15 @@ call s:TmuxLikeMap('nnoremap', '<Up>', '<c-w>k')
 call s:TmuxLikeMap('nnoremap', '<Right>', '<c-w>l')
 
 " resize
-if has('nvim')
-  call s:TmuxLikeMap('nnoremap', 'H', '<c-w>5<')
-  call s:TmuxLikeMap('nnoremap', 'J', '<c-w>5+')
-  call s:TmuxLikeMap('nnoremap', 'K', '<c-w>5-')
-  call s:TmuxLikeMap('nnoremap', 'L', '<c-w>5>')
-else
-  call s:TmuxLikeMap('nnoremap', 'H', '<cmd>call tmuxlike#EnterResizeMode("H")<CR>')
-  call s:TmuxLikeMap('nnoremap', 'J', '<cmd>call tmuxlike#EnterResizeMode("J")<CR>')
-  call s:TmuxLikeMap('nnoremap', 'K', '<cmd>call tmuxlike#EnterResizeMode("K")<CR>')
-  call s:TmuxLikeMap('nnoremap', 'L', '<cmd>call tmuxlike#EnterResizeMode("L")<CR>')
-endif
+call s:TmuxLikeMap('nnoremap', 'H', '<cmd>call tmuxlike#EnterResizeMode("H")<CR>')
+call s:TmuxLikeMap('nnoremap', 'J', '<cmd>call tmuxlike#EnterResizeMode("J")<CR>')
+call s:TmuxLikeMap('nnoremap', 'K', '<cmd>call tmuxlike#EnterResizeMode("K")<CR>')
+call s:TmuxLikeMap('nnoremap', 'L', '<cmd>call tmuxlike#EnterResizeMode("L")<CR>')
 
 " /* choose-win */
-call s:TmuxLikeMap('nmap', 'q', '<Plug>(choosewin)')
-call s:TmuxLikeMap('nmap', 's', '<Plug>(choosewin)')
-call s:TmuxLikeMap('nmap', '=', '<Plug>(choosewin)')
+call s:TmuxLikeMap('nnoremap', 'q', '<cmd>call tmuxlike#ChooseWindow()<CR>')
+call s:TmuxLikeMap('nnoremap', 's', '<cmd>call tmuxlike#ChooseWindow()<CR>')
+call s:TmuxLikeMap('nnoremap', '=', '<cmd>call tmuxlike#ChooseWindow()<CR>')
 
 " --------------------------------------------
 " Initial
@@ -167,3 +163,6 @@ if !hasmapto('<Plug>(tmuxlike-prefix)')
   nmap <silent> <c-a> <Plug>(tmuxlike-prefix)
 endif
 
+if has('nvim')
+  lua require('tmuxlike').setup()
+endif

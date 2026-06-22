@@ -1,159 +1,140 @@
-*vim-tmuxlike.txt*    Add tmux operating habits to vim.
+*vim-tmuxlike.txt*    tmux-style prefix commands for Vim and Neovim
 
-|tmuxlike-intro|    vim-tmuxlike
-|tmuxlike-TOC|    TOC
-|tmuxlike-Intro|    Intro
-|tmuxlike-Installation|    Installation
-|tmuxlike-Configuration|    Configuration
-|tmuxlike-Others|    Others
+==============================================================================
+CONTENTS                                                   *tmuxlike-contents*
 
-VIM-TMUXLIKE                *tmuxlike-intro*
+1. Introduction                                      |tmuxlike-intro|
+2. Commands                                          |tmuxlike-commands|
+3. Configuration                                     |tmuxlike-config|
+4. Neovim Lua setup                                  |tmuxlike-lua|
 
-Add tmux operating habits to vim.
+==============================================================================
+INTRODUCTION                                            *tmuxlike-intro*
 
-If you are quite addicted to tmux, you might need this plugin to make your vim work a bit like tmux.
+vim-tmuxlike provides tmux-style prefix commands for navigating, splitting,
+resizing, and managing editor windows and tabs.
 
+The default prefix is CTRL-A. Every command below starts with the prefix.
+Neovim's Lua features require Neovim 0.11 or later.
+Vim's interactive resize mode and built-in chooser require +popupwin.
 
-TOC                *tmuxlike-TOC*
+==============================================================================
+COMMANDS                                                *tmuxlike-commands*
 
-[Intro](#intro)
+WINDOWS
 
-[Installation](#installation)
+ h j k l, arrow keys   Move to a neighboring window.
+ ;                    Move to the previously selected window.
+ z                    Toggle zoom for the current window.
+ %                    Create a vertical split with a new buffer.
+ |                    Vertically split the current buffer.
+ "                    Create a horizontal split with a new buffer.
+ _                    Horizontally split the current buffer.
+ x                    Confirm and close the current window.
+ !                    Move the current file to a new tab.
+ Space                Cycle through the available pane layouts.
+ {                    Swap with the previous pane.
+ }                    Swap with the next pane.
 
-[Configuration](#configuration)
+The layout sequence is even-horizontal, even-vertical, main-horizontal, and
+main-vertical. Pane swapping wraps around, and focus follows the original pane
+content.
 
-[Others](#others)
+RESIZE MODE
 
+ H                    Increase the current window's width.
+ L                    Decrease the current window's width.
+ J                    Increase the current window's height.
+ K                    Decrease the current window's height.
 
-INTRO                *tmuxlike-Intro*
+Press Escape, Enter, or q to leave resize mode. Other keys are ignored while
+the mode is active.
 
-**Prefix key**
+TABS
 
-Just like `<prefix>`(usually `CTRL-B`) in tmux, there's a prefix key in vim-tmuxlike.<br>
-I use `<c-a>`(`CTRL-A`) as the default prefix key. You need to change it if you have the same keymap in tmux.
+ c                    Open a new tab after the last tab.
+ CTRL-H, CTRL-P       Select the previous tab.
+ CTRL-N, CTRL-L       Select the next tab.
+ &                    Confirm and close the current tab.
 
-**Features**
+OTHER
 
-Tmux users may be familiar with these basic operation.
+ ?                    Open this help page.
+ ~                    Show message history.
+ d                    Suspend Vim or Neovim.
+ r                    Redraw the screen.
+ t                    Display the current time.
+ ]                    Paste from the + register.
+ q s =                Open the window chooser.
 
-Every keymap should start with `<prefix>`.
+Vim and Neovim include a built-in window chooser for the q, s, and = mappings.
+When multiple tabs are open, the chooser also displays a numbered tab selector.
+Press 1 through 9 to jump directly to a tab.
+Pane labels can be selected with either lowercase or uppercase letters.
+Their glyphs are generated from TOIlet. The available fonts are "smblock"
+(default) and "pagga". Pane labels use the preset sequence
+ABEFHIJKLMNOPRSTUVWXYZ, excluding C, D, G, and Q.
 
-`?`   open vim-tmuxlike's helppage
+==============================================================================
+CONFIGURATION                                             *tmuxlike-config*
 
-`z`   toggle buffer zoom mode
+Change the prefix by mapping to <Plug>(tmuxlike-prefix): >
 
-![](https://raw.githubusercontent.com/Karmenzind/i/master/vim-tmuxlike/toggle_zoom.gif)
-
-`%`   split window; open new buffer oh the right side
-
-![](https://raw.githubusercontent.com/Karmenzind/i/master/vim-tmuxlike/vsplit_new.gif)
-
-`|`   split current buffer oh the right side (custom: `g:tmuxlike_key_vsplit`)
-
-![](https://raw.githubusercontent.com/Karmenzind/i/master/vim-tmuxlike/vsplit_cur.gif)
-
-`"`   vertically split window; open new buffer downside
-
-![](https://raw.githubusercontent.com/Karmenzind/i/master/vim-tmuxlike/split_new.gif)
-
-`_`   split current buffer downside (custom: `g:tmuxlike_key_hsplit`)
-
-![](https://raw.githubusercontent.com/Karmenzind/i/master/vim-tmuxlike/split_cur.gif)
-
-`c`   open a new tab with an empty window after the last tab
-
-`<c-h>` `<c-p>`  select previous tab
-
-`n` `<c-n>` `<c-l>`  select next tab
-
-`x`   forcely close current buffer
-
-`&`   forcely close current tab
-
-`~`   show history messages
-
-![](https://raw.githubusercontent.com/Karmenzind/i/master/vim-tmuxlike/hist_msg.gif)
-
-`!`   break current buffer (move current buffer to new tabpage)
-
-![](https://raw.githubusercontent.com/Karmenzind/i/master/vim-tmuxlike/break_cur.gif)
-
-`d`   detach/suspend vim (the same as CTRL-Z)
-
-`r`   redraw current buffer
-
-`]`   paste [from register *]
-
-`;`   choose last buffer
-
-`h` `j` `k` `l` `Left` `Down` `Up` `Right`  change buffer
-
-`H` `J` `K` `L`  resize current window
-
-These keymaps need [t9md/vim-choosewin](https://github.com/t9md/vim-choosewin) installed.
-
-`q` `s` `=`  enter choosewin mode
-
-![choose_win](https://raw.githubusercontent.com/Karmenzind/i/master/vim-tmuxlike/choose_win.gif)
-
-
-INSTALLATION                *tmuxlike-Installation*
-
-use [vim-plug](https://github.com/junegunn/vim-plug):
-
->
-    Plug 'karmenzind/vim-tmuxlike'
-<
-
-use [Vundle](https://github.com/VundleVim/Vundle.vim):
-
->
-    Plugin 'karmenzind/vim-tmuxlike'
-<
-
-
-CONFIGURATION                *tmuxlike-Configuration*
-
-**prefix key**
-
-Feel free to change the prefix key.
-I recommend using a 'CTRL-' key combination which will be really convenient (e.g. with default prefix `<c-a>`, you just need to hold CTRL and type 'ah' for `<prefix><c-h>`).
-
->
-    " use CTRL-A (default)
-    nmap <c-a> <Plug>(tmuxlike-prefix)
-    " use CTRL-\
-    nmap <c-\> <Plug>(tmuxlike-prefix)
-    " use double leader (it will be `\\` if you haven't change the mapleader)
+    nmap <C-\> <Plug>(tmuxlike-prefix)
     nmap <Leader><Leader> <Plug>(tmuxlike-prefix)
 <
+Change the current-buffer split keys before the plugin is loaded: >
 
-**operation keymaps**
-
->
-    " use <prefix> + <key> to split current buffer
-    let g:tmuxlike_key_vsplit = '\'  " default value: \| (slash is for escaping)
-    let g:tmuxlike_key_hsplit = '-'  " default value: _
+    let g:tmuxlike_key_vsplit = '\'
+    let g:tmuxlike_key_hsplit = '-'
 <
+Configure message history: >
 
-**others**
-
->
-    " View :messages in a scratch buffer or a floating window. Options: float, scratch(default)
     let g:tmuxlike_messages_container = 'scratch'
 <
+Supported values are "scratch", "float", and any other value for the standard
+:messages display.
 
+Configure Vim's built-in window chooser before loading the plugin: >
 
-OTHERS                *tmuxlike-Others*
+    let g:tmuxlike_chooser_scope = 'current'
+    let g:tmuxlike_chooser_font = 'smblock'
+    let g:tmuxlike_chooser_characters = 'ABEFHIJKLMNOPRSTUVWXYZ'
+<
+The scope may be "current" or "all".
 
-TODO:
+==============================================================================
+NEOVIM LUA SETUP                                             *tmuxlike-lua*
 
-(WIP) list and search tab/win with fzf/floating
+Neovim users can configure all command keys with require("tmuxlike").setup(): >
 
-all keymaps configurable
-
-If you have any problem or advice, please [create an issue](https://github.com/Karmenzind/vim-tmuxlike/issues/new) and I'll fix it ASAP.
-
-
+    lua << EOF
+    require("tmuxlike").setup({
+      prefix = "<C-a>",
+      resize_step = 3,
+      messages = "float",
+      chooser = {
+        scope = "current",
+        font = "smblock",
+        characters = "ABEFHIJKLMNOPRSTUVWXYZ",
+      },
+      mappings = {
+        messages = "~",
+        choose_window = { "q", "s", "=" },
+        split_vertical = "|",
+        split_horizontal = "_",
+        next_layout = "<Space>",
+        swap_pane_previous = "{",
+        swap_pane_next = "}",
+      },
+    })
+    EOF
+<
+Set a mapping to false to disable it. A mapping may also be a list of keys.
+The chooser scope may be "current" for window labels in the current tab, or
+"all" for a list containing windows from every tab.
+The labels c, d, g, q, and digits are reserved and automatically excluded.
+Digits 1 through 9 select tabs when multiple tabs are open.
+Explicitly configuring C, D, G, or Q raises an error.
 
 vim:tw=78:ts=8:ft=help:norl:
